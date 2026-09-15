@@ -7,6 +7,11 @@
 
 当前进度：**Lv01 ✅ / 共 25 关**
 
+```bash
+git clone https://github.com/shixun926-dotcom/BetterSpring.git
+cd BetterSpring
+```
+
 ---
 
 ## 这个仓库是什么

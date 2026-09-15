@@ -3,6 +3,7 @@
 > Spring Boot 3.5.16 ｜ Java 17（编译目标） ｜ 端口 8080
 > 当前进度：**Lv01 · 让 Spring Boot 跑起来 ✅**
 > 项目文档集在 [`../docs/`](../docs/README.md)，本文件只讲**怎么把工程跑起来**。
+> 仓库：<https://github.com/shixun926-dotcom/BetterSpring>
 
 ---
 
