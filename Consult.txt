@@ -1,0 +1,650 @@
+有，而且我建议直接把这 14 关扩展成一套“Spring Boot 实战闯关路线”。
+你现在不是缺知识点，而是缺一个东西：
+每学一个知识点，都能立刻看到它解决了什么问题。
+所以我们不要做“Spring Boot 知识目录”，而是做一个从 0 到一个真正后端项目的完整成长路线。
+🗺️ Spring Boot 0 → 项目实战路线
+我们就假设最终做一个：
+「校园学生管理系统」
+后面这个项目可以继续扩展成你的个人 GitHub 项目。
+技术栈：
+Java 17
+Spring Boot 3
+Spring MVC
+MyBatis
+MySQL
+Redis
+JWT
+Maven
+Lombok
+Postman
+Git
+最终结构大概：
+浏览器 / Vue
+       ↓
+     HTTP
+       ↓
+Controller
+       ↓
+   Service
+       ↓
+    Mapper
+       ↓
+    MySQL
+       
+Redis ← Service
+       
+JWT ← 登录认证
+第一阶段：先让 Spring Boot 不再神秘
+第 1 关：让 Spring Boot 跑起来
+目标
+你要亲手完成：
+创建 Spring Boot 项目
+↓
+启动
+↓
+Tomcat 启动
+↓
+访问 localhost:8080
+学什么
+Maven
+pom.xml
+Spring Boot Starter
+@SpringBootApplication
+SpringApplication.run()
+application.yml
+最终代码
+@SpringBootApplication
+public class Application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+必须搞懂
+main()
+ ↓
+SpringApplication.run()
+ ↓
+Spring 容器启动
+ ↓
+Tomcat 启动
+ ↓
+项目开始监听 8080
+第 2 关：写第一个 Controller
+目标：
+浏览器
+ ↓
+GET /hello
+ ↓
+Controller
+ ↓
+返回 Hello Spring Boot
+你会写：
+@RestController
+public class HelloController {
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello Spring Boot";
+    }
+}
+然后我们故意修改：
+@GetMapping("/hello")
+↓
+@GetMapping("/student")
+让你亲眼看到：
+Java 方法是怎么变成 HTTP 接口的。
+第 3 关：真正理解 HTTP
+这一关非常重要。
+我们不急着学 Spring。
+直接研究：
+GET
+POST
+PUT
+DELETE
+然后：
+GET /student/1
+和：
+POST /student
+有什么区别。
+再学：
+PathVariable
+RequestParam
+RequestBody
+例如：
+@GetMapping("/student/{id}")
+public String getStudent(@PathVariable Integer id) {
+    return "学生：" + id;
+}
+然后：
+/student/1001
+↓
+id = 1001
+再学习：
+@PostMapping("/student")
+public String addStudent(@RequestBody Student student) {
+    return "添加成功";
+}
+你会真正理解：
+JSON
+ ↓
+Java对象
+这个过程。
+第二阶段：真正进入 Spring
+第 4 关：为什么需要 Service？
+先故意写一个很垃圾的 Controller：
+@RestController
+public class StudentController {
+
+    @GetMapping("/student/{id}")
+    public Student getStudent(@PathVariable Integer id) {
+
+        // 查询数据库
+        // 判断权限
+        // 业务处理
+        // 返回数据
+
+        return xxx;
+    }
+}
+然后我们开始制造问题：
+如果一个 Controller 有 30 个接口怎么办？
+于是引入：
+Controller
+    ↓
+Service
+最终：
+@RestController
+public class StudentController {
+
+    private final StudentService studentService;
+
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+}
+第 5 关：IOC
+这一关不背定义。
+我们先写：
+StudentService service = new StudentService();
+然后问：
+为什么 Controller 自己 new 不好？
+然后让 Spring 接管：
+@Service
+public class StudentService {
+}
+最终理解：
+以前：
+
+Controller
+   ↓
+new StudentService()
+   ↓
+自己管理对象
+
+
+Spring：
+
+Spring容器
+   ↓
+创建 StudentService
+   ↓
+管理 StudentService
+   ↓
+交给 Controller
+这就是 IOC。
+第 6 关：DI
+然后进一步研究：
+public StudentController(StudentService studentService)
+为什么 Spring 能自动传进来？
+这时候学习：
+依赖注入
+构造器注入
+@Autowired
+@Component
+@Service
+@Repository
+@Controller
+@RestController
+然后专门做一个实验：
+删掉 @Service
+↓
+启动项目
+↓
+看看报什么错
+再加回来。
+这个实验会让你真正理解：
+Bean 到底是什么。
+第三阶段：开始接数据库
+这里开始就有意思了。
+第 7 关：引入 MyBatis
+首先建立：
+Controller
+ ↓
+Service
+ ↓
+Mapper
+写：
+@Mapper
+public interface StudentMapper {
+
+    Student getById(Integer id);
+}
+然后学习：
+@Mapper
+@MapperScan
+@Select
+@Insert
+@Update
+@Delete
+以及 XML：
+<select id="getById">
+    SELECT *
+    FROM student
+    WHERE id = #{id}
+</select>
+这一关重点理解：
+Mapper 到底是什么？
+第 8 关：真正访问 MySQL
+创建：
+student
+表：
+id
+name
+age
+gender
+class_name
+然后：
+Controller
+ ↓
+Service
+ ↓
+Mapper
+ ↓
+MyBatis
+ ↓
+JDBC
+ ↓
+MySQL
+你会第一次看到：
+我写的 Java 代码真的把数据库里的数据拿出来了。
+第 9 关：完成 CRUD
+这个阶段我们把学生管理系统真正做出来。
+Create
+POST /students
+Read
+GET /students
+GET /students/1
+Update
+PUT /students/1
+Delete
+DELETE /students/1
+最终：
+学生管理系统 V1.0
+已经可以用了。
+第四阶段：开始接触“公司代码”
+前面是在学习。
+从这里开始，就逐渐模拟公司项目。
+第 10 关：统一返回结果
+你现在可能：
+return student;
+有时候：
+return "success";
+这不规范。
+我们统一：
+{
+    "code": 200,
+    "msg": "success",
+    "data": {}
+}
+创建：
+Result<T>
+例如：
+public class Result<T> {
+
+    private Integer code;
+    private String msg;
+    private T data;
+}
+以后：
+return Result.success(student);
+这时候你开始接触真正的：
+企业级接口设计。
+第 11 关：异常处理
+故意制造：
+查询不存在学生
+ ↓
+抛异常
+ ↓
+浏览器出现一堆错误信息
+然后解决：
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+}
+学习：
+@ExceptionHandler
+最终：
+Service
+ ↓
+throw new XxxException
+ ↓
+GlobalExceptionHandler
+ ↓
+统一JSON
+例如：
+{
+    "code": 404,
+    "msg": "学生不存在",
+    "data": null
+}
+这一关之后，你的项目味道就出来了。
+第五阶段：Spring 最核心的东西
+第 12 关：事务
+这里直接设计一个现实场景：
+转账
+
+A账户 -100
+B账户 +100
+如果：
+A -100 成功
+B +100 失败
+怎么办？
+于是学习：
+@Transactional
+然后故意：
+@Transactional
+public void transfer() {
+
+    updateA();
+
+    int x = 10 / 0;
+
+    updateB();
+}
+看看数据库发生什么。
+然后理解：
+事务
+原子性
+回滚
+提交
+@Transactional
+这比背：
+@Transactional 用于声明式事务管理。
+有用得多。
+第六阶段：Redis
+第 13 关：Redis
+先不要碰复杂的缓存。
+我们从：
+Java
+ ↓
+Redis
+开始。
+学习：
+String
+Hash
+List
+Set
+ZSet
+然后做：
+登录验证码
+用户获取验证码
+ ↓
+Redis
+ ↓
+5分钟过期
+例如：
+code:13800138000
+        ↓
+      928371
+然后：
+登录
+ ↓
+从 Redis 获取验证码
+ ↓
+验证
+你会理解：
+Redis 到底解决了什么问题。
+第七阶段：真正做登录
+第 14 关：JWT
+现在我们正式加入：
+用户
+ ↓
+登录
+ ↓
+账号密码
+ ↓
+MySQL
+ ↓
+验证成功
+ ↓
+JWT
+ ↓
+返回前端
+以后访问：
+GET /student
+需要：
+Authorization: Bearer xxx
+后端：
+JWT
+ ↓
+解析
+ ↓
+获取用户ID
+ ↓
+判断身份
+ ↓
+允许访问
+这时候你就会理解：
+JWT是什么
+为什么要登录
+Token是什么
+为什么不能只靠Session
+拦截器是什么
+但我建议：别停在第 14 关
+因为到了这里，你已经具备了一个非常重要的 Spring Boot 基础框架。
+接下来可以继续：
+第八阶段：从“会写”变成“像公司”
+第 15 关：参数校验
+学习：
+@NotNull
+@NotBlank
+@Size
+@Min
+@Max
+@Valid
+例如：
+public Result add(
+        @Valid @RequestBody StudentDTO student
+)
+第 16 关：DTO / VO
+开始理解：
+Entity
+DTO
+VO
+例如：
+StudentEntity
+     ↓
+StudentDTO
+     ↓
+StudentVO
+这是很多初学者看公司项目时非常容易懵的地方。
+第 17 关：拦截器
+学习：
+HandlerInterceptor
+然后：
+请求
+ ↓
+Interceptor
+ ↓
+Controller
+把 JWT 校验放进去。
+第 18 关：AOP
+终于开始碰：
+@Aspect
+做一个：
+接口访问日志
+例如：
+用户：10001
+接口：/student
+方法：GET
+耗时：32ms
+然后你就会知道：
+AOP 为什么存在。
+第 19 关：分页
+加入：
+GET /students?page=1&pageSize=10
+学习：
+分页
+LIMIT
+OFFSET
+PageHelper / MyBatis相关分页方案
+第 20 关：文件上传
+实现：
+头像上传
+ ↓
+服务器 / OSS
+ ↓
+返回URL
+ ↓
+MySQL保存URL
+这时候你就会接触：
+MultipartFile
+OSS
+文件存储
+第九阶段：把它变成一个真正的项目
+最后我们把学生管理系统升级成：
+「校园综合管理系统」
+加入：
+用户
+ ├── 注册
+ ├── 登录
+ ├── JWT
+ └── 权限
+
+学生
+ ├── CRUD
+ ├── 分页
+ ├── 查询
+ └── 头像
+
+课程
+ ├── CRUD
+ └── 选课
+
+成绩
+ ├── 查询
+ ├── 修改
+ └── 统计
+
+管理员
+ ├── 用户管理
+ ├── 学生管理
+ └── 权限管理
+后面甚至可以加入：
+Redis
+RabbitMQ
+WebSocket
+Spring Security
+Docker
+Nginx
+Vue3
+这时候你已经不是：
+“我在学 Spring Boot。”
+而是：
+“我正在开发一个 Spring Boot 后端项目。”
+这两个学习状态差别非常大。
+⭐ 最关键：每一关固定采用「5步教学法」
+我特别建议我们之后就按照这个模式学。
+例如今天学：
+第 5 关：IOC
+我不会直接给你讲一大堆概念。
+而是：
+① 先制造问题
+new StudentService()
+为什么不好？
+↓
+② 让你自己发现问题
+Controller依赖Service
+Service依赖Mapper
+Mapper又依赖其他东西
+↓
+③ 引入 Spring
+@Service
+↓
+④ 做实验
+删掉@Service
+↓
+启动
+↓
+报错
+↓
+恢复
+↓
+启动成功
+↓
+⑤ 最后才总结
+IOC = 对象创建和管理交给Spring
+DI = Spring把对象注入给需要它的对象
+Bean = Spring容器管理的对象
+这样你学到的东西会非常牢。
+🎯 所以我给你重新整理成最终版
+                 Spring Boot 闯关路线
+
+Lv1  Spring Boot启动
+ ↓
+Lv2  Controller
+ ↓
+Lv3  HTTP
+ ↓
+Lv4  Service
+ ↓
+Lv5  IOC
+ ↓
+Lv6  DI / Bean
+ ↓
+Lv7  MyBatis
+ ↓
+Lv8  MySQL
+ ↓
+Lv9  CRUD
+ ↓
+Lv10 统一返回
+ ↓
+Lv11 异常处理
+ ↓
+Lv12 事务
+ ↓
+Lv13 Redis
+ ↓
+Lv14 JWT
+ ↓
+Lv15 参数校验
+ ↓
+Lv16 DTO / VO
+ ↓
+Lv17 Interceptor
+ ↓
+Lv18 AOP
+ ↓
+Lv19 分页
+ ↓
+Lv20 文件上传
+ ↓
+Lv21 Spring Security
+ ↓
+Lv22 RabbitMQ
+ ↓
+Lv23 WebSocket
+ ↓
+Lv24 Docker
+ ↓
+Lv25 Vue3前后端联调
+ ↓
+        🚀 完整项目
+而且每一关都不只是“学一个知识点”，而是完成一个能运行的小目标。
+我尤其建议你这样安排
+你现在直接从 Lv1 开始，不要提前看后面的内容。
+我们就真的把它当成游戏：
+你完成 Lv1 → 我给你验收 → Lv2 → 验收 → Lv3……
+每一关我会给你：
+① 本关目标 → ② 为什么学 → ③ 环境准备 → ④ 手把手写代码 → ⑤ 让你自己敲 → ⑥ 故意制造错误 → ⑦ 解释原理 → ⑧ 小练习 → ⑨ 通关标准 → ⑩ 下一关。

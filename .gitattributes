@@ -1,0 +1,22 @@
+# 统一换行符：仓库内一律存 LF，检出时也保持 LF
+# 避免 Windows / Linux 协作时出现"整文件 diff"
+* text=auto eol=lf
+
+# 二进制文件不做换行转换
+*.jar   binary
+*.war   binary
+*.zip   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.pdf   binary
+*.xlsx  binary
+
+# Windows 脚本检出为 CRLF，避免部分编辑器/终端异常
+*.cmd   text eol=crlf
+*.bat   text eol=crlf
+
+# PowerShell 脚本保持 LF（已实测可用），但显式声明为文本
+*.ps1   text eol=lf
