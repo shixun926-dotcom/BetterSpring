@@ -1,0 +1,29 @@
+# Lv01 · 见 docs/07-代码规范与工程规范.md §7.3「必须提交 / 禁止提交」
+
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### IDE ###
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.classpath
+.project
+
+### 日志 ###
+*.log
+logs/
+
+### 本地敏感配置（真实密码绝不入库）###
+application-local.yml
+.env
+
+### 上传目录（Lv20 起）###
+upload/
+
+### OS ###
+Thumbs.db
+.DS_Store

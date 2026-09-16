@@ -23,6 +23,7 @@ cd BetterSpring
 | [`campus/`](campus/) | **可运行的 Spring Boot 工程** —— 校园综合管理系统（后端） |
 | [`docs/`](docs/README.md) | **项目文档集** —— 需求、架构、数据库、接口、规范，以及 25 关的完整讲义 |
 | [`Consult.txt`](Consult.txt) | 路线原始来源（对话记录），已整理进 `docs/` |
+| [`solutions/`](solutions/) | **逐关通关参考解**（冻结快照）—— ⚠️ **里面是答案**，使用前先读[使用规则](docs/00-文档使用与维护规范.md#10-参考解使用规则) |
 
 最终形态：
 

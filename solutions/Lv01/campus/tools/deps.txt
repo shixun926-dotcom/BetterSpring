@@ -1,0 +1,55 @@
+﻿# Lv01 · spring-boot-starter-web 3.5.16 的精确运行时依赖闭包
+# ------------------------------------------------------------
+# 相对 ~/.m2/repository 的路径，每行一个。
+#
+# 为什么必须"精确"而不是"把仓库里的 jar 全丢进去"？
+#   Spring Boot 的自动配置是按 classpath 上"有什么"来决定"配什么"的。
+#   把 spring-boot-starter-jdbc / HikariCP / mysql-connector-j 一起放进去，
+#   DataSourceAutoConfiguration 就会生效并索要数据库 url，
+#   于是 Lv01 直接启动失败 —— 详见 docs/levels/Lv01-SpringBoot启动.md 附录 B · Lv01-P01。
+#
+# 这份清单就是 Maven 平时替你算出来的东西。
+
+# --- Spring Boot 自身 ---
+org/springframework/boot/spring-boot/3.5.16/spring-boot-3.5.16.jar
+org/springframework/boot/spring-boot-autoconfigure/3.5.16/spring-boot-autoconfigure-3.5.16.jar
+# --- Starter（本身是空壳，靠它的 pom 拉依赖；放进 classpath 无害）---
+org/springframework/boot/spring-boot-starter/3.5.16/spring-boot-starter-3.5.16.jar
+org/springframework/boot/spring-boot-starter-web/3.5.16/spring-boot-starter-web-3.5.16.jar
+org/springframework/boot/spring-boot-starter-json/3.5.16/spring-boot-starter-json-3.5.16.jar
+org/springframework/boot/spring-boot-starter-tomcat/3.5.16/spring-boot-starter-tomcat-3.5.16.jar
+org/springframework/boot/spring-boot-starter-logging/3.5.16/spring-boot-starter-logging-3.5.16.jar
+# --- Spring Framework ---
+org/springframework/spring-aop/6.2.19/spring-aop-6.2.19.jar
+org/springframework/spring-beans/6.2.19/spring-beans-6.2.19.jar
+org/springframework/spring-context/6.2.19/spring-context-6.2.19.jar
+org/springframework/spring-core/6.2.19/spring-core-6.2.19.jar
+org/springframework/spring-expression/6.2.19/spring-expression-6.2.19.jar
+org/springframework/spring-jcl/6.2.19/spring-jcl-6.2.19.jar
+org/springframework/spring-web/6.2.19/spring-web-6.2.19.jar
+org/springframework/spring-webmvc/6.2.19/spring-webmvc-6.2.19.jar
+# --- 内嵌 Tomcat ---
+org/apache/tomcat/embed/tomcat-embed-core/10.1.55/tomcat-embed-core-10.1.55.jar
+org/apache/tomcat/embed/tomcat-embed-el/10.1.55/tomcat-embed-el-10.1.55.jar
+org/apache/tomcat/embed/tomcat-embed-websocket/10.1.55/tomcat-embed-websocket-10.1.55.jar
+# --- Jackson（JSON 序列化，Lv03 才用得上，但 starter-json 会带上）---
+com/fasterxml/jackson/core/jackson-annotations/2.21/jackson-annotations-2.21.jar
+com/fasterxml/jackson/core/jackson-core/2.21.4/jackson-core-2.21.4.jar
+com/fasterxml/jackson/core/jackson-databind/2.21.4/jackson-databind-2.21.4.jar
+com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.21.4/jackson-datatype-jdk8-2.21.4.jar
+com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.21.4/jackson-datatype-jsr310-2.21.4.jar
+com/fasterxml/jackson/module/jackson-module-parameter-names/2.21.4/jackson-module-parameter-names-2.21.4.jar
+# --- 其它 ---
+jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar
+io/micrometer/micrometer-commons/1.15.12/micrometer-commons-1.15.12.jar
+io/micrometer/micrometer-observation/1.15.12/micrometer-observation-1.15.12.jar
+org/yaml/snakeyaml/2.4/snakeyaml-2.4.jar
+# --- 日志 ---
+org/slf4j/slf4j-api/2.0.18/slf4j-api-2.0.18.jar
+org/slf4j/jul-to-slf4j/2.0.18/jul-to-slf4j-2.0.18.jar
+org/apache/logging/log4j/log4j-api/2.24.3/log4j-api-2.24.3.jar
+org/apache/logging/log4j/log4j-to-slf4j/2.24.3/log4j-to-slf4j-2.24.3.jar
+ch/qos/logback/logback-classic/1.5.34/logback-classic-1.5.34.jar
+ch/qos/logback/logback-core/1.5.34/logback-core-1.5.34.jar
+# --- 编译期注解处理器（pom 里是 optional，不进运行时）---
+org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar

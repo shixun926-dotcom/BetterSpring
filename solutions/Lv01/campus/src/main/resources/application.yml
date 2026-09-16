@@ -1,0 +1,16 @@
+# Lv01 · 让 Spring Boot 跑起来
+# 这个文件是 Spring Boot 的主配置。它被放在 src/main/resources 下，
+# 会被打进 classpath 根目录，Spring Boot 启动时自动读取（这也是"自动配置"的一部分）。
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: campus
+
+# Lv01 的三个练习（答案见 docs/levels/Lv01-SpringBoot启动.md 附录 A · A.1）：
+#   Q01 改端口   -> server.port: 9090
+#   Q02 改应用名 -> spring.application.name: campus-server   （会显示在日志的 [campus-server] 处）
+#   Q03 关横幅   -> spring.main.banner-mode: "off"
+# 练习做完后已恢复为上面的最终状态。另外：命令行 --server.port=xxx 的优先级高于本文件。
